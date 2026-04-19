@@ -7,9 +7,9 @@ export default function Navbar() {
 
         <Link href="/" className="flex items-center">
           <img
-            src="/moonshine_logo_long.jpg"
+            src="/bialy.png"
             alt="Logo"
-            className="h-10 w-auto object-contain"
+            className="h-20 w-auto object-contain"
           />
         </Link>
 
