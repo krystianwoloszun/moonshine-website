@@ -34,7 +34,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 
       ${show ? "translate-y-0" : "-translate-y-full"}
-      bg-black/30 backdrop-blur-md`}
+      bg-black/30`}
     >
       <div className={`mx-auto flex justify-between items-center p-4 ${bebas.className}`}>
 
