@@ -7,8 +7,9 @@ const bebas = Bebas_Neue({
 
 export default function Hero() {
   return (
-    <section className="relative h-screen w-full flex items-center">
+    <section className="relative h-screen w-full overflow-hidden">
 
+      {/* BACKGROUND */}
       <div className="absolute inset-0 -z-10">
         <img
           src="/banner_wall.JPG"
@@ -17,26 +18,38 @@ export default function Hero() {
         />
       </div>
 
-      <div className="absolute inset-0 bg-black/20 -z-10" />
+      {/* OVERLAY */}
+      <div className="absolute inset-0 bg-black/30 -z-10" />
 
-      {/* BLOK PO LEWEJ */}
+      {/* LOGO BLOCK */}
       <div
-        className={`relative z-10 text-white ${bebas.className} ml-12 md:ml-20 lg:ml-32 w-full max-w-3xl`}
+        className={`
+          absolute ${bebas.className}
+
+          /* <1200px → center */
+          left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+          text-center
+
+          /* ≥1200px → left */
+          [@media(min-width:1200px)]:left-[5%]
+          [@media(min-width:1200px)]:top-[45%]
+          [@media(min-width:1200px)]:-translate-x-0
+          [@media(min-width:1200px)]:-translate-y-1/2
+          [@media(min-width:1200px)]:text-left
+        `}
       >
 
-        <div className="flex flex-col items-start text-left">
-
-          <img
-  src="/moonshine_logo_long.jpg"
-  alt="Moonshine"
-  className="w-full max-w-3xl md:max-w-4xl h-auto object-contain -translate-x-10 md:-translate-x-16 lg:-translate-x-50"
-/>
-
-<p className="w-full text-center text-base md:text-lg lg:text-2xl tracking-wide text-gray-200 -translate-x-10 md:-translate-x-16 lg:-translate-x-50">
-  70% rock 40% unexpected twists
-</p>
-
-        </div>
+        <img
+          src="/PoziomeLogo.svg"
+          alt="Moonshine"
+          className="
+            w-[240px] md:w-[310px] lg:w-[380px]
+            h-auto object-contain
+            invert brightness-0
+            mx-auto
+            [@media(min-width:1200px)]:mx-0
+          "
+        />
 
       </div>
 
