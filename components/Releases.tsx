@@ -10,12 +10,12 @@ export default function Releases() {
     {
       title: "Moonshine",
       cover: "ep.jpg",
-      url: "https://open.spotify.com/album/2afTyrQkaho2BiQaUXCir9?si=042vCxiQR3q1O9saTnm-KA&nd=1&dlsi=8607074e2cfe4c36",
+      url: "https://open.spotify.com/album/45qIEjiJtHWKFGn3DDdjy2?si=1cHY9cxnSEmjgoQBRnUprQ",
     },
     {
       title: "Eye of the Master",
       cover: "Eye of the Master.png",
-      url: "https://open.spotify.com/",
+      url: "https://open.spotify.com/album/2afTyrQkaho2BiQaUXCir9?si=042vCxiQR3q1O9saTnm-KA&nd=1&dlsi=8607074e2cfe4c36",
     },
   ];
 

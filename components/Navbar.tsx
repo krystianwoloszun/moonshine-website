@@ -40,21 +40,71 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
 
-          <Link href="/" className="flex items-center">
+          <button
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              })
+            }
+            aria-label="Przewiń do góry"
+            className="flex items-center"
+          >
             <img
               src="/bialy.png"
               alt="Logo"
-              className="h-20 w-auto object-contain"
+              className="h-20 w-auto object-contain opacity-70 hover:opacity-100 transition"
             />
-          </Link>
+          </button>
 
           <div className="hidden md:flex items-center gap-3">
+            <a
+              href="https://www.facebook.com/moonshinebandoff"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <img
+                src="icons/Facebook_white.png"
+                className="ml-10 h-10 opacity-70 hover:opacity-100 transition"
+              />
+            </a>
 
-            <img src="icons/Facebook_white.png" className="ml-10 h-10 opacity-70 hover:opacity-100 transition" />
-            <img src="icons/Instagram_white.png" className="h-10 opacity-70 hover:opacity-100 transition" />
-            <img src="icons/Spotify_white.png" className="h-10 opacity-70 hover:opacity-100 transition" />
-            <img src="icons/Youtube_white.png" className="h-10 opacity-70 hover:opacity-100 transition" />
+            <a
+              href="https://www.instagram.com/moonshineband.official"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <img
+                src="icons/Instagram_white.png"
+                className="h-10 opacity-70 hover:opacity-100 transition"
+              />
+            </a>
 
+            <a
+              href="https://open.spotify.com/artist/6RtrOH9czw4PIu2dN1citD?si=CHHHkMCRSLG9uAFcGwz7Ig"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Spotify"
+            >
+              <img
+                src="icons/Spotify_white.png"
+                className="h-10 opacity-70 hover:opacity-100 transition"
+              />
+            </a>
+
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <img
+                src="icons/Youtube_white.png"
+                className="h-10 opacity-70 hover:opacity-100 transition"
+              />
+            </a>
           </div>
         </div>
 
