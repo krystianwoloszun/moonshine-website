@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
 
 const bebas = Bebas_Neue({
@@ -12,25 +11,25 @@ const bebas = Bebas_Neue({
 const socialLinks = [
   {
     name: "Facebook",
-    href: "#",
+    href: "https://www.facebook.com/moonshinebandoff",
     icon: "/icons/Facebook_white.png",
     hoverClass: "hover:bg-[#1877F2]",
   },
   {
     name: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/moonshineband.official",
     icon: "/icons/Instagram_white.png",
     hoverClass: "hover:bg-[#E4405F]",
   },
   {
     name: "Spotify",
-    href: "#",
+    href: "https://open.spotify.com/artist/6RtrOH9czw4PIu2dN1citD?si=CHHHkMCRSLG9uAFcGwz7Ig",
     icon: "/icons/Spotify_white.png",
     hoverClass: "hover:bg-[#1DB954]",
   },
   {
     name: "YouTube",
-    href: "#",
+    href: "https://youtube.com",
     icon: "/icons/Youtube_white.png",
     hoverClass: "hover:bg-[#FF0000]",
   },
@@ -76,18 +75,18 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-3">
-
             {socialLinks.map((social, index) => (
               <a
                 key={social.name}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.name}
                 className={`flex h-10 w-10 items-center justify-center rounded-full opacity-70 transition hover:opacity-100 ${social.hoverClass} ${index === 0 ? "ml-10" : ""}`}
               >
                 <img src={social.icon} alt="" className="h-10 w-10 object-contain" />
               </a>
             ))}
-
           </div>
         </div>
 
