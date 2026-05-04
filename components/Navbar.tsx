@@ -1,13 +1,39 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
 
 const bebas = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
 });
+
+const socialLinks = [
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/moonshinebandoff",
+    icon: "/icons/Facebook_white.png",
+    hoverClass: "hover:bg-[#1877F2]",
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/moonshineband.official",
+    icon: "/icons/Instagram_white.png",
+    hoverClass: "hover:bg-[#E4405F]",
+  },
+  {
+    name: "Spotify",
+    href: "https://open.spotify.com/artist/6RtrOH9czw4PIu2dN1citD?si=CHHHkMCRSLG9uAFcGwz7Ig",
+    icon: "/icons/Spotify_white.png",
+    hoverClass: "hover:bg-[#1DB954]",
+  },
+  {
+    name: "YouTube",
+    href: "https://youtube.com",
+    icon: "/icons/Youtube_white.png",
+    hoverClass: "hover:bg-[#FF0000]",
+  },
+];
 
 export default function Navbar() {
   const [show, setShow] = useState(true);
@@ -58,53 +84,18 @@ export default function Navbar() {
           </button>
 
           <div className="hidden md:flex items-center gap-3">
-            <a
-              href="https://www.facebook.com/moonshinebandoff"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <img
-                src="icons/Facebook_white.png"
-                className="ml-10 h-10 opacity-70 hover:opacity-100 transition"
-              />
-            </a>
-
-            <a
-              href="https://www.instagram.com/moonshineband.official"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <img
-                src="icons/Instagram_white.png"
-                className="h-10 opacity-70 hover:opacity-100 transition"
-              />
-            </a>
-
-            <a
-              href="https://open.spotify.com/artist/6RtrOH9czw4PIu2dN1citD?si=CHHHkMCRSLG9uAFcGwz7Ig"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Spotify"
-            >
-              <img
-                src="icons/Spotify_white.png"
-                className="h-10 opacity-70 hover:opacity-100 transition"
-              />
-            </a>
-
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-            >
-              <img
-                src="icons/Youtube_white.png"
-                className="h-10 opacity-70 hover:opacity-100 transition"
-              />
-            </a>
+            {socialLinks.map((social, index) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className={`flex h-10 w-10 items-center justify-center rounded-full opacity-70 transition hover:opacity-100 ${social.hoverClass} ${index === 0 ? "ml-10" : ""}`}
+              >
+                <img src={social.icon} alt="" className="h-10 w-10 object-contain" />
+              </a>
+            ))}
           </div>
         </div>
 

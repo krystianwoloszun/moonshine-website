@@ -5,6 +5,12 @@ const bebas = Bebas_Neue({
   subsets: ["latin"],
 });
 
+const socialLinks = [
+  { name: "Instagram", href: "#", hoverClass: "hover:bg-[#E4405F]" },
+  { name: "Spotify", href: "#", hoverClass: "hover:bg-[#1DB954]" },
+  { name: "YouTube", href: "#", hoverClass: "hover:bg-[#FF0000]" },
+];
+
 export default function Footer() {
   return (
     <footer className="bg-black text-gray-400 py-10">
@@ -27,9 +33,17 @@ export default function Footer() {
 
         <div className={bebas.className}>
           <p className="text-white mb-2 uppercase tracking-wide">Social</p>
-          <a className="hover:text-white transition" href="#">Instagram</a><br />
-          <a className="hover:text-white transition" href="#">Spotify</a><br />
-          <a className="hover:text-white transition" href="#">YouTube</a>
+          <div className="flex flex-wrap gap-2">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                className={`inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-gray-300 transition hover:text-white ${social.hoverClass}`}
+                href={social.href}
+              >
+                {social.name}
+              </a>
+            ))}
+          </div>
         </div>
 
       </div>
