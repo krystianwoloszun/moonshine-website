@@ -9,6 +9,33 @@ const bebas = Bebas_Neue({
   subsets: ["latin"],
 });
 
+const socialLinks = [
+  {
+    name: "Facebook",
+    href: "#",
+    icon: "/icons/Facebook_white.png",
+    hoverClass: "hover:bg-[#1877F2]",
+  },
+  {
+    name: "Instagram",
+    href: "#",
+    icon: "/icons/Instagram_white.png",
+    hoverClass: "hover:bg-[#E4405F]",
+  },
+  {
+    name: "Spotify",
+    href: "#",
+    icon: "/icons/Spotify_white.png",
+    hoverClass: "hover:bg-[#1DB954]",
+  },
+  {
+    name: "YouTube",
+    href: "#",
+    icon: "/icons/Youtube_white.png",
+    hoverClass: "hover:bg-[#FF0000]",
+  },
+];
+
 export default function Navbar() {
   const [show, setShow] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
@@ -50,10 +77,16 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-3">
 
-            <img src="icons/Facebook_white.png" className="ml-10 h-10 opacity-70 hover:opacity-100 transition" />
-            <img src="icons/Instagram_white.png" className="h-10 opacity-70 hover:opacity-100 transition" />
-            <img src="icons/Spotify_white.png" className="h-10 opacity-70 hover:opacity-100 transition" />
-            <img src="icons/Youtube_white.png" className="h-10 opacity-70 hover:opacity-100 transition" />
+            {socialLinks.map((social, index) => (
+              <a
+                key={social.name}
+                href={social.href}
+                aria-label={social.name}
+                className={`flex h-10 w-10 items-center justify-center rounded-full opacity-70 transition hover:opacity-100 ${social.hoverClass} ${index === 0 ? "ml-10" : ""}`}
+              >
+                <img src={social.icon} alt="" className="h-10 w-10 object-contain" />
+              </a>
+            ))}
 
           </div>
         </div>
