@@ -112,7 +112,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <nav className="hidden gap-6 text-sm uppercase tracking-wider text-gray-300 md:flex">
+        <nav className="hidden gap-6 text-3xl uppercase tracking-wider text-gray-300 md:flex">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="hover:text-white">
               {link.label}
