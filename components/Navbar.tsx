@@ -100,8 +100,8 @@ export default function Navbar() {
         </div>
 
         <nav className="text-xl hidden md:flex gap-6 text-sm uppercase tracking-wider text-gray-300">
-          <a href="#releases" className="hover:text-white">Wydania</a>
           <a href="#videos" className="hover:text-white">Teledyski</a>
+          <a href="#releases" className="hover:text-white">Wydania</a>
           <a href="#instagram" className="hover:text-white">Instagram</a>
           <a href="#band" className="hover:text-white">Skład</a>
           <a href="#epk" className="hover:text-white">EPK</a>
