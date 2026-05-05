@@ -35,9 +35,19 @@ const socialLinks = [
   },
 ];
 
+const navLinks = [
+  { href: "#videos", label: "Teledyski" },
+  { href: "#releases", label: "Wydania" },
+  { href: "#instagram", label: "Instagram" },
+  { href: "#band", label: "Skład" },
+  { href: "#epk", label: "EPK" },
+  { href: "#contact", label: "Kontakt" },
+];
+
 export default function Navbar() {
   const [show, setShow] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +55,7 @@ export default function Navbar() {
 
       if (currentScroll > lastScroll && currentScroll > 50) {
         setShow(false);
+        setMenuOpen(false);
       } else {
         setShow(true);
       }
@@ -55,6 +66,8 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <header
@@ -99,17 +112,61 @@ export default function Navbar() {
           </div>
         </div>
 
-        <nav className="text-xl hidden md:flex gap-6 text-sm uppercase tracking-wider text-gray-300">
-          <a href="#videos" className="hover:text-white">Teledyski</a>
-          <a href="#releases" className="hover:text-white">Wydania</a>
-          <a href="#instagram" className="hover:text-white">Instagram</a>
-          <a href="#band" className="hover:text-white">Skład</a>
-          <a href="#epk" className="hover:text-white">EPK</a>
-          <a href="#contact" className="hover:text-white">Kontakt</a>
+        <nav className="hidden gap-6 text-sm uppercase tracking-wider text-gray-300 md:flex">
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} className="hover:text-white">
+              {link.label}
+            </a>
+          ))}
         </nav>
 
-        <button className="md:hidden text-xl">☰</button>
+        <button
+          type="button"
+          className="flex h-11 w-11 items-center justify-center text-3xl text-white/80 transition hover:text-white md:hidden"
+          aria-label={menuOpen ? "Zamknij menu" : "Otwórz menu"}
+          aria-controls="mobile-navigation"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span aria-hidden="true">{menuOpen ? "×" : "☰"}</span>
+        </button>
       </div>
+
+      <nav
+        id="mobile-navigation"
+        className={`border-t border-white/10 bg-black/90 px-6 pb-6 pt-2 uppercase tracking-wider text-gray-200 transition md:hidden ${
+          menuOpen ? "block" : "hidden"
+        }`}
+      >
+        <div className="flex flex-col">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="border-b border-white/10 py-4 text-sm transition hover:text-white"
+              onClick={closeMenu}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="mt-5 flex items-center gap-3">
+          {socialLinks.map((social) => (
+            <a
+              key={social.name}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.name}
+              className={`flex h-10 w-10 items-center justify-center rounded-full opacity-80 transition hover:opacity-100 ${social.hoverClass}`}
+              onClick={closeMenu}
+            >
+              <img src={social.icon} alt="" className="h-10 w-10 object-contain" />
+            </a>
+          ))}
+        </div>
+      </nav>
     </header>
   );
 }
