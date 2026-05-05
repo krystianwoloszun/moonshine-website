@@ -2,12 +2,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Releases from "@/components/Releases";
-import { Bebas_Neue, Inter } from "next/font/google";
-
-const bebas = Bebas_Neue({
-  weight: "400",
-  subsets: ["latin"],
-});
+import Videos from "@/components/Videos";
+import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +19,7 @@ export default function RootLayout({
       <body id="top" className={`${inter.className} bg-black text-white`}>
         <Navbar />
         <main>{children}</main>
+        <Videos />
         <Releases />
         <Footer />
       </body>
