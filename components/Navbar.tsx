@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Bebas_Neue } from "next/font/google";
 
 const bebas = Bebas_Neue({
@@ -36,12 +37,13 @@ const socialLinks = [
 ];
 
 const navLinks = [
-  { href: "#videos", label: "Teledyski" },
-  { href: "#releases", label: "Wydania" },
-  { href: "#instagram", label: "Instagram" },
-  { href: "#band", label: "Skład" },
-  { href: "#epk", label: "EPK" },
-  { href: "#contact", label: "Kontakt" },
+  { href: "/#videos", label: "Teledyski" },
+  { href: "/#galeria", label: "Galeria" },
+  { href: "/#releases", label: "Wydania" },
+  { href: "/#instagram", label: "Instagram" },
+  { href: "/#band", label: "Skład" },
+  { href: "/#epk", label: "EPK" },
+  { href: "/#contact", label: "Kontakt" },
 ];
 
 export default function Navbar() {
@@ -79,14 +81,9 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
 
-          <button
-            onClick={() =>
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              })
-            }
-            aria-label="Przewiń do góry"
+          <Link
+            href="/"
+            aria-label="Przejdź na stronę główną"
             className="flex items-center"
           >
             <img
@@ -94,7 +91,7 @@ export default function Navbar() {
               alt="Logo"
               className="h-20 w-auto object-contain opacity-70 hover:opacity-100 transition"
             />
-          </button>
+          </Link>
 
           <div className="hidden md:flex items-center gap-3">
             {socialLinks.map((social, index) => (
@@ -114,9 +111,9 @@ export default function Navbar() {
 
         <nav className="hidden gap-6 text-3xl uppercase tracking-wider text-gray-300 md:flex">
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-white">
+            <Link key={link.href} href={link.href} className="hover:text-white">
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -140,14 +137,14 @@ export default function Navbar() {
       >
         <div className="flex flex-col">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="border-b border-white/10 py-4 text-sm transition hover:text-white"
               onClick={closeMenu}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
