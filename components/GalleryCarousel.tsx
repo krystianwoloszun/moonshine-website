@@ -85,7 +85,7 @@ export default function GalleryCarousel() {
               {loopedImages.map((image, index) => (
               <Link
                 key={`${image.src}-${index}`}
-                href="/galeria"
+                href="/gallery"
                 className="group relative block h-[26rem] shrink-0 basis-[calc((100%_-_((var(--carousel-visible)_-_1)_*_var(--carousel-gap)))_/_var(--carousel-visible))] overflow-hidden bg-zinc-900"
               >
                 <Image

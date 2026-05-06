@@ -38,9 +38,8 @@ const socialLinks = [
 
 const navLinks = [
   { href: "/#videos", label: "Teledyski" },
-  { href: "/#galeria", label: "Galeria" },
   { href: "/#releases", label: "Wydania" },
-  { href: "/#instagram", label: "Instagram" },
+    { href: "/gallery", label: "Galeria" },
   { href: "/#band", label: "Skład" },
   { href: "/#epk", label: "EPK" },
   { href: "/#contact", label: "Kontakt" },
