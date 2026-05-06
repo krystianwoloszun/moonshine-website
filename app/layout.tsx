@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import Releases from "@/components/Releases";
 import Videos from "@/components/Videos";
 import { Inter } from "next/font/google";
-
+import ContactForm from "@/components/ContactForm";
+import Hero from "@/components/Hero";
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -19,8 +20,10 @@ export default function RootLayout({
       <body id="top" className={`${inter.className} bg-black text-white`}>
         <Navbar />
         <main>{children}</main>
+        <Hero />
         <Videos />
         <Releases />
+        <ContactForm />
         <Footer />
       </body>
     </html>
