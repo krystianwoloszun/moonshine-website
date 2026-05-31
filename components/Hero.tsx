@@ -27,12 +27,13 @@ export default function Hero() {
       </div>
 
       {/* LOGO BLOCK */}
-      <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
         <div
           aria-label="Moonshine"
           role="img"
           className="
-            h-[min(86vw,760px)] w-[min(86vw,760px)]
+            h-[min(94.6vw,calc(100svh-14rem),836px)] w-[min(94.6vw,calc(100svh-14rem),836px)]
+            md:h-[min(94.6vw,calc(100svh-16rem),836px)] md:w-[min(94.6vw,calc(100svh-16rem),836px)]
             bg-white/1
             backdrop-invert
             [mask-image:url('/vektor.svg')]
