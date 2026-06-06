@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 
@@ -50,9 +51,28 @@ function tipAnchor(rings: number[][]): { left: number; top: number } {
   return { left: (sumX / n / IMG_W) * 100, top: (minY / IMG_H) * 100 };
 }
 
+function memberHref(name: string): string {
+  return `/sklad/${name.toLowerCase()}`;
+}
+
 export default function Band() {
+  const router = useRouter();
   const [activeId, setActiveId] = useState<number | null>(null);
+  const [canHover] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches,
+  );
   const active = members.find((m) => m.id === activeId) ?? null;
+
+  function handleClick(member: Member) {
+    // Desktop (hover): the spotlight is already shown on hover, so a click
+    // navigates straight away. Touch: first tap activates the spotlight,
+    // a second tap on the same member navigates.
+    if (canHover || activeId === member.id) {
+      router.push(memberHref(member.name));
+    } else {
+      setActiveId(member.id);
+    }
+  }
 
   return (
     <section id="band" className="bg-black px-4 py-16 text-white">
@@ -107,16 +127,16 @@ export default function Band() {
               />
             )}
 
-            {members.map(({ id, points }) => (
+            {members.map((member) => (
               <path
-                key={id}
-                d={ringsToPath(points)}
+                key={member.id}
+                d={ringsToPath(member.points)}
                 fillRule="evenodd"
                 fill="transparent"
                 className="cursor-pointer"
-                onMouseEnter={() => setActiveId(id)}
-                onMouseLeave={() => setActiveId(null)}
-                onClick={() => setActiveId((prev) => (prev === id ? null : id))}
+                onMouseEnter={canHover ? () => setActiveId(member.id) : undefined}
+                onMouseLeave={canHover ? () => setActiveId(null) : undefined}
+                onClick={() => handleClick(member)}
               />
             ))}
           </svg>
