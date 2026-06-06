@@ -42,3 +42,6 @@ next-env.d.ts
 
 public/gallery/*
 public/video/*
+public/cutouts/*
+
+CLAUDE.md
