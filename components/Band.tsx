@@ -50,7 +50,7 @@ function tipAnchor(rings: number[][]): { left: number; top: number } {
   return { left: (sumX / n / IMG_W) * 100, top: (minY / IMG_H) * 100 };
 }
 
-export default function TeamSection() {
+export default function Band() {
   const [activeId, setActiveId] = useState<number | null>(null);
   const active = members.find((m) => m.id === activeId) ?? null;
 
