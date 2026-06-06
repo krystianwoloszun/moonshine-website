@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 
 const bebas = Bebas_Neue({ weight: "400", subsets: ["latin"] });
 
 const IMG_W = 5080;
 const IMG_H = 2910;
+
+const HIT_PADDING = 200;
 
 type Member = {
   id: number;
@@ -55,6 +57,89 @@ function memberHref(name: string): string {
   return `/sklad/${name.toLowerCase()}`;
 }
 
+function pointInRing(r: number[], x: number, y: number): boolean {
+  let inside = false;
+  const n = r.length / 2;
+  for (let i = 0, j = n - 1; i < n; j = i++) {
+    const xi = r[i * 2];
+    const yi = r[i * 2 + 1];
+    const xj = r[j * 2];
+    const yj = r[j * 2 + 1];
+    if (
+      yi > y !== yj > y &&
+      x < ((xj - xi) * (y - yi)) / (yj - yi) + xi
+    ) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+function pointInMember(m: Member, x: number, y: number): boolean {
+  let inside = false;
+  for (const r of m.points) if (pointInRing(r, x, y)) inside = !inside;
+  return inside;
+}
+
+function distToSegment(
+  px: number,
+  py: number,
+  ax: number,
+  ay: number,
+  bx: number,
+  by: number,
+): number {
+  const dx = bx - ax;
+  const dy = by - ay;
+  const len2 = dx * dx + dy * dy;
+  const t = len2 === 0 ? 0 : Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / len2));
+  const cx = ax + t * dx;
+  const cy = ay + t * dy;
+  return Math.hypot(px - cx, py - cy);
+}
+
+function distToMember(m: Member, x: number, y: number): number {
+  let best = Infinity;
+  for (const r of m.points) {
+    const n = r.length / 2;
+    for (let i = 0, j = n - 1; i < n; j = i++) {
+      const d = distToSegment(x, y, r[j * 2], r[j * 2 + 1], r[i * 2], r[i * 2 + 1]);
+      if (d < best) best = d;
+    }
+  }
+  return best;
+}
+
+const LEG_PAIR: ReadonlySet<number> = new Set([2, 3]);
+const LEG_PADDING = 50;
+
+function pickMember(x: number, y: number): number | null {
+  for (const m of members) if (pointInMember(m, x, y)) return m.id;
+
+  let nearestId: number | null = null;
+  let nearestDist = Infinity;
+  let secondId: number | null = null;
+  let secondDist = Infinity;
+  for (const m of members) {
+    const d = distToMember(m, x, y);
+    if (d < nearestDist) {
+      secondDist = nearestDist;
+      secondId = nearestId;
+      nearestDist = d;
+      nearestId = m.id;
+    } else if (d < secondDist) {
+      secondDist = d;
+      secondId = m.id;
+    }
+  }
+  if (nearestId === null) return null;
+
+  const inLegGap =
+    LEG_PAIR.has(nearestId) && secondId !== null && LEG_PAIR.has(secondId);
+  const padding = inLegGap ? LEG_PADDING : HIT_PADDING;
+  return nearestDist <= padding ? nearestId : null;
+}
+
 export default function Band() {
   const router = useRouter();
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -63,14 +148,28 @@ export default function Band() {
   );
   const active = members.find((m) => m.id === activeId) ?? null;
 
-  function handleClick(member: Member) {
-    // Desktop (hover): the spotlight is already shown on hover, so a click
-    // navigates straight away. Touch: first tap activates the spotlight,
-    // a second tap on the same member navigates.
-    if (canHover || activeId === member.id) {
-      router.push(memberHref(member.name));
+  function pickAt(e: MouseEvent<HTMLDivElement>): number | null {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * IMG_W;
+    const y = ((e.clientY - rect.top) / rect.height) * IMG_H;
+    return pickMember(x, y);
+  }
+
+  function handleMove(e: MouseEvent<HTMLDivElement>) {
+    const id = pickAt(e);
+    setActiveId((prev) => (prev === id ? prev : id));
+  }
+
+  function handleClick(e: MouseEvent<HTMLDivElement>) {
+    const id = pickAt(e);
+    if (id === null) {
+      setActiveId(null);
+      return;
+    }
+    if (canHover || id === activeId) {
+      router.push(memberHref(members.find((m) => m.id === id)!.name));
     } else {
-      setActiveId(member.id);
+      setActiveId(id);
     }
   }
 
@@ -88,7 +187,12 @@ export default function Band() {
             <div className="rounded-[1.15rem] bg-[#F8841F] p-2 md:p-3">
               <div className="rounded-[0.95rem] bg-[#E0A526] p-2 md:p-3">
                 <div className="rounded-[0.8rem] bg-[#2E1A12] p-1.5 md:p-2">
-                  <div className="relative w-full overflow-visible">
+                  <div
+                    className="relative w-full cursor-pointer overflow-visible"
+                    onMouseMove={canHover ? handleMove : undefined}
+                    onMouseLeave={canHover ? () => setActiveId(null) : undefined}
+                    onClick={handleClick}
+                  >
               <Image
               src="/banner_wall.JPG"
               alt="Skład zespołu Moonshine"
@@ -99,7 +203,7 @@ export default function Band() {
 
             <svg
               viewBox={`0 0 ${IMG_W} ${IMG_H}`}
-              className="absolute inset-0 h-full w-full rounded-xl"
+              className="pointer-events-none absolute inset-0 h-full w-full rounded-xl"
               aria-hidden="true"
             >
             <defs>
@@ -127,18 +231,6 @@ export default function Band() {
               />
             )}
 
-            {members.map((member) => (
-              <path
-                key={member.id}
-                d={ringsToPath(member.points)}
-                fillRule="evenodd"
-                fill="transparent"
-                className="cursor-pointer"
-                onMouseEnter={canHover ? () => setActiveId(member.id) : undefined}
-                onMouseLeave={canHover ? () => setActiveId(null) : undefined}
-                onClick={() => handleClick(member)}
-              />
-            ))}
           </svg>
 
           {active &&
